@@ -32,16 +32,16 @@ int main(int argc, char **argv) {
     sscanf(argv[1], "cam:%d,%d,%d", &n, &w, &h);
     cap = new VideoCapture(n);
     if (cap->isOpened() && w != 0 && h != 0) {
-      cap->set(CV_CAP_PROP_FRAME_WIDTH, w);
-      cap->set(CV_CAP_PROP_FRAME_HEIGHT, h);
+      cap->set(CAP_PROP_FRAME_WIDTH, w);
+      cap->set(CAP_PROP_FRAME_HEIGHT, h);
     }
   }
   if (!cap->isOpened()) {
     fprintf(stderr, "Cannot open %s\n", argv[1]);
     exit(-1);
   }
-  int iw = cap->get(CV_CAP_PROP_FRAME_WIDTH);
-  int ih = cap->get(CV_CAP_PROP_FRAME_HEIGHT);
+  int iw = cap->get(CAP_PROP_FRAME_WIDTH);
+  int ih = cap->get(CAP_PROP_FRAME_HEIGHT);
   printf("Resolution : %d x %d\n", iw, ih);
 
   //
@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
     namedWindow("videotest", WINDOW_AUTOSIZE );
     printf("Press ENTER on the window to exit\n");
   } else {
-    writer = new VideoWriter(argv[2], fourcc("PIM1"), 30, cvSize(iw, ih), true);
+    writer = new VideoWriter(argv[2], fourcc("PIM1"), 30, Size(iw, ih), true);
     if (!writer->isOpened()) {
       fprintf(stderr, "Cannot open %s\n", argv[2]);
       exit(-1);

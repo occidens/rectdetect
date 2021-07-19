@@ -14,7 +14,7 @@
 #include <time.h>
 
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS
-#include <CL/cl.h>
+#include <OpenCL/cl.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -32,16 +32,16 @@ using namespace cv;
 
 static void showRect(rect_t rect, int r, int g, int b, int thickness, Mat &img) {
   for(int i=0;i<4;i++) {
-    line(img, cvPoint(rect.c2[i].a[0], rect.c2[i].a[1]), cvPoint(rect.c2[(i+1)%4].a[0], rect.c2[(i+1)%4].a[1]), Scalar(r, g, b), thickness, 8, 0);
+    line(img, Point(rect.c2[i].a[0], rect.c2[i].a[1]), Point(rect.c2[(i+1)%4].a[0], rect.c2[(i+1)%4].a[1]), Scalar(r, g, b), thickness, 8, 0);
   }
 
   line(img,
-       cvPoint(rect.c2[0].a[0], rect.c2[0].a[1]),
-       cvPoint(rect.c2[2].a[0], rect.c2[2].a[1]), Scalar(r, g, b), 1, 8, 0);
+       Point(rect.c2[0].a[0], rect.c2[0].a[1]),
+       Point(rect.c2[2].a[0], rect.c2[2].a[1]), Scalar(r, g, b), 1, 8, 0);
 
   line(img,
-       cvPoint(rect.c2[1].a[0], rect.c2[1].a[1]),
-       cvPoint(rect.c2[3].a[0], rect.c2[3].a[1]), Scalar(r, g, b), 1, 8, 0);
+       Point(rect.c2[1].a[0], rect.c2[1].a[1]),
+       Point(rect.c2[3].a[0], rect.c2[3].a[1]), Scalar(r, g, b), 1, 8, 0);
 }
 
 static int fourcc(const char *s) {
@@ -79,16 +79,16 @@ int main(int argc, char **argv) {
     sscanf(argv[2], "cam:%d,%d,%d", &n, &w, &h);
     cap = new VideoCapture(n);
     if (cap->isOpened() && w != 0 && h != 0) {
-      cap->set(CV_CAP_PROP_FRAME_WIDTH, w);
-      cap->set(CV_CAP_PROP_FRAME_HEIGHT, h);
+      cap->set(CAP_PROP_FRAME_WIDTH, w);
+      cap->set(CAP_PROP_FRAME_HEIGHT, h);
     }
     if (!cap->isOpened()) {
       fprintf(stderr, "Cannot open %s\n", argv[2]);
       exit(-1);
     }
   }
-  int iw = cap->get(CV_CAP_PROP_FRAME_WIDTH);
-  int ih = cap->get(CV_CAP_PROP_FRAME_HEIGHT);
+  int iw = cap->get(CAP_PROP_FRAME_WIDTH);
+  int ih = cap->get(CAP_PROP_FRAME_HEIGHT);
 
   printf("Resolution : %d x %d\n", iw, ih);
 
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
   if (argc < 4 || strcmp(argv[3], "-") == 0) {
     namedWindow(winname, WINDOW_AUTOSIZE );
   } else {
-    writer = new VideoWriter(argv[3], fourcc("PIM1"), 30, cvSize(iw, ih), true);
+    writer = new VideoWriter(argv[3], fourcc("PIM1"), 30, Size(iw, ih), true);
     if (!writer->isOpened()) {
       fprintf(stderr, "Cannot open %s\n", argv[3]);
       exit(-1);

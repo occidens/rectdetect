@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <time.h>
-#include <malloc.h>
+// #include <malloc.h>
 #include <assert.h>
 
 #ifdef _MSC_VER
@@ -28,7 +28,7 @@
 #include <execinfo.h>
 #endif
 
-#include <CL/cl.h>
+#include <OpenCL/cl.h>
 
 #include "helper.h"
 #include "oclhelper.h"

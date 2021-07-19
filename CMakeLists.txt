@@ -36,6 +36,9 @@ else()
   include_directories( ${OPENCL_INCLUDE_DIRS} )
 endif()
 
+include_directories("/opt/local/include/opencv4")
+set(OpenCV_DIR "/opt/local/libexec/opencv4")
+
 #
 
 if(NOT CMAKE_BUILD_TYPE)

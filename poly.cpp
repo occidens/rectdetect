@@ -14,7 +14,7 @@
 //#include <sys/time.h>
 
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS
-#include <CL/cl.h>
+#include <OpenCL/cl.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
 
   //
 
-  Mat rimg = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+  Mat rimg = imread(argv[1], IMREAD_COLOR);
   if( rimg.data == NULL ) exitf(-1, "Could not load %s\n", argv[1]);
 
   if (rimg.channels() != 3) exitf(-1, "nChannels != 3\n");
@@ -149,7 +149,7 @@ int main(int argc, char **argv) {
       if (ls[j].x0 < 0 || ls[j].x0 >= iw || ls[j].x1 < 0 || ls[j].x1 >= iw ||
 	  ls[j].y0 < 0 || ls[j].y0 >= ih || ls[j].y1 < 0 || ls[j].y1 >= ih) continue;
 #endif
-      line(img, cvPoint(ls[j].x0, ls[j].y0), cvPoint(ls[j].x1, ls[j].y1), (cnt & 1) ? Scalar(100, 100, 255) : Scalar(255, 255, 100), 1, 8, 0);
+      line(img, Point(ls[j].x0, ls[j].y0), Point(ls[j].x1, ls[j].y1), (cnt & 1) ? Scalar(100, 100, 255) : Scalar(255, 255, 100), 1, 8, 0);
     }
   }
 

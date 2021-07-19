@@ -14,7 +14,7 @@
 //#include <sys/time.h>
 
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS
-#include <CL/cl.h>
+#include <OpenCL/cl.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -62,16 +62,16 @@ int main(int argc, char **argv) {
     sscanf(argv[2], "cam:%d,%d,%d", &n, &w, &h);
     cap = new VideoCapture(n);
     if (cap->isOpened() && w != 0 && h != 0) {
-      cap->set(CV_CAP_PROP_FRAME_WIDTH, w);
-      cap->set(CV_CAP_PROP_FRAME_HEIGHT, h);
+      cap->set(CAP_PROP_FRAME_WIDTH, w);
+      cap->set(CAP_PROP_FRAME_HEIGHT, h);
     }
     if (!cap->isOpened()) {
       fprintf(stderr, "Cannot open %s\n", argv[2]);
       exit(-1);
     }
   }
-  int iw = cap->get(CV_CAP_PROP_FRAME_WIDTH);
-  int ih = cap->get(CV_CAP_PROP_FRAME_HEIGHT);
+  int iw = cap->get(CAP_PROP_FRAME_WIDTH);
+  int ih = cap->get(CAP_PROP_FRAME_HEIGHT);
 
   printf("Resolution : %d x %d\n", iw, ih);
 
@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
   if (argc < 4 || strcmp(argv[3], "-") == 0) {
     namedWindow(winname, WINDOW_AUTOSIZE );
   } else {
-    writer = new VideoWriter(argv[3], fourcc("PIM1"), 30, cvSize(iw, ih), true);
+    writer = new VideoWriter(argv[3], fourcc("PIM1"), 30, Size(iw, ih), true);
     if (!writer->isOpened()) {
       fprintf(stderr, "Cannot open %s\n", argv[3]);
       exit(-1);
@@ -203,7 +203,7 @@ int main(int argc, char **argv) {
       if (ls->x0 < 0 || ls->x0 >= iw || ls->x1 < 0 || ls->x1 >= iw ||
 	  ls->y0 < 0 || ls->y0 >= ih || ls->y1 < 0 || ls->y1 >= ih) continue;
 #endif
-      line(img, cvPoint(ls->x0, ls->y0), cvPoint(ls->x1, ls->y1), Scalar(255, 255, 255), 1, 8, 0);
+      line(img, Point(ls->x0, ls->y0), Point(ls->x1, ls->y1), Scalar(255, 255, 255), 1, 8, 0);
     }
 
     if (writer != NULL) {

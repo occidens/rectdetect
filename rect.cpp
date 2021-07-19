@@ -14,7 +14,7 @@
 //#include <sys/time.h>
 
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS
-#include <CL/cl.h>
+#include <OpenCL/cl.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -32,16 +32,16 @@ using namespace cv;
 
 static void showRect(rect_t rect, int r, int g, int b, int thickness, Mat &img) {
   for(int i=0;i<4;i++) {
-    line(img, cvPoint(rect.c2[i].a[0], rect.c2[i].a[1]), cvPoint(rect.c2[(i+1)%4].a[0], rect.c2[(i+1)%4].a[1]), Scalar(r, g, b), thickness, 8, 0);
+    line(img, Point(rect.c2[i].a[0], rect.c2[i].a[1]), Point(rect.c2[(i+1)%4].a[0], rect.c2[(i+1)%4].a[1]), Scalar(r, g, b), thickness, 8, 0);
   }
 
   line(img,
-       cvPoint(rect.c2[0].a[0], rect.c2[0].a[1]),
-       cvPoint(rect.c2[2].a[0], rect.c2[2].a[1]), Scalar(r, g, b), 1, 8, 0);
+       Point(rect.c2[0].a[0], rect.c2[0].a[1]),
+       Point(rect.c2[2].a[0], rect.c2[2].a[1]), Scalar(r, g, b), 1, 8, 0);
 
   line(img,
-       cvPoint(rect.c2[1].a[0], rect.c2[1].a[1]),
-       cvPoint(rect.c2[3].a[0], rect.c2[3].a[1]), Scalar(r, g, b), 1, 8, 0);
+       Point(rect.c2[1].a[0], rect.c2[1].a[1]),
+       Point(rect.c2[3].a[0], rect.c2[3].a[1]), Scalar(r, g, b), 1, 8, 0);
 }
 
 int main(int argc, char **argv) {
@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
 
   //
 
-  Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+  Mat img = imread(argv[1], IMREAD_COLOR);
   if( img.data == NULL ) exitf(-1, "Could not load %s\n", argv[1]);
 
   if (img.channels() != 3) exitf(-1, "nChannels != 3\n");
